@@ -2,7 +2,7 @@ import { GoogleGenAI, Schema, Type } from "@google/genai";
 import { PROFILE, EXPERIENCE, PROJECTS, SKILLS, EDUCATION, CERTIFICATIONS, ABOUT } from './data';
 
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyDu47Lt7DYFJQcHq4Pc7Qg-buPGDfkh01E";
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 if (!apiKey) {
   console.error(apiKey);
   throw new Error('API key not configured. Please check your .env file.');
@@ -10,7 +10,7 @@ if (!apiKey) {
 const ai = new GoogleGenAI({ apiKey });
 
 const MODEL_FAST = 'gemini-2.5-flash';
-const MODEL_SMART = 'gemini-2.5-flash'; // Flash is sufficient and faster for these tasks
+const MODEL_SMART = 'gemini-2.5-flash';
 
 // --- Context Construction (The "RAG" Data Source) ---
 const PORTFOLIO_CONTEXT = JSON.stringify({
