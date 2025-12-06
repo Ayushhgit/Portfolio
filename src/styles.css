@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Brutalist / Retro Card Styles */
+.retro-card {
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  position: relative;
+  /* transition handled by framer-motion */
+}
+
+/* Hover effects moved to JS/Framer Motion */
+
+.retro-button {
+  background-color: transparent;
+  border: 1px solid #22c55e;
+  color: #22c55e;
+  position: relative;
+  transition: all 0.1s;
+}
+
+.retro-button:hover {
+  background-color: #22c55e;
+  color: #000;
+  box-shadow: 4px 4px 0px #004d23;
+  transform: translate(-1px, -1px);
+}
+
+.retro-input {
+  background-color: #050505;
+  border: 1px solid #333;
+  color: #22c55e;
+  font-family: 'Space Mono', monospace;
+  outline: none;
+  transition: all 0.2s ease;
+  border-radius: 0; /* Ensure sharp edges */
+}
+
+.retro-input:focus {
+  border-color: #22c55e;
+  background-color: #000;
+  box-shadow: 4px 4px 0px #004d23; /* Hard green shadow on focus */
+}
+
+.retro-input::placeholder {
+  color: #444;
+  opacity: 1;
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+/* Glitch Effect Keyframes (Simple) */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+.terminal-cursor::after {
+  content: '█';
+  animation: blink 1s step-start infinite;
+  color: #22c55e;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}

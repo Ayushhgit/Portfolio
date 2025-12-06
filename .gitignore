@@ -1,0 +1,55 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directory
+node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+
+# Local environment secrets
+.env
+.env.*
+!.env.example
+# (The above ignores `.env`, `.env.local`, etc., but keeps `.env.example` for repo reference)
+
+# Vite local cache
+.cache/
+.vite/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test coverage
+coverage/
+
+# Temporary outputs
+*.tmp
+*.temp
+*.pid
+*.seed
+*.tgz
+
+# Lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
