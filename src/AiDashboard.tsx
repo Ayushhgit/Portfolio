@@ -58,7 +58,7 @@ const Modal = ({ isOpen, onClose, title, children }: { isOpen: boolean; onClose:
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -72,35 +72,35 @@ const Modal = ({ isOpen, onClose, title, children }: { isOpen: boolean; onClose:
             initial="initial"
             animate="animate"
             exit="exit"
-            className="relative w-full max-w-4xl bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(34,197,94,0.15)] flex flex-col max-h-[85vh] overflow-hidden rounded-sm ring-1 ring-white/5"
+            className="relative w-full max-w-4xl bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(34,197,94,0.1)] sm:shadow-[0_0_50px_rgba(34,197,94,0.15)] flex flex-col max-h-[90vh] sm:max-h-[85vh] overflow-hidden rounded-sm ring-1 ring-white/5"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-white/5 backdrop-blur-md z-10">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-primary/10 rounded-sm border border-primary/20">
-                   <Bot className="text-primary" size={20} />
+            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-white/10 bg-white/5 backdrop-blur-md z-10">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-1.5 sm:p-2 bg-primary/10 rounded-sm border border-primary/20">
+                   <Bot className="text-primary w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                    <h3 className="text-white font-mono font-bold uppercase tracking-wider text-sm md:text-base flex items-center gap-2">
-                      {title} <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-gray-400 font-normal">v3.0.1</span>
+                    <h3 className="text-white font-mono font-bold uppercase tracking-wider text-xs sm:text-sm md:text-base flex items-center gap-1.5 sm:gap-2">
+                      {title} <span className="text-[8px] sm:text-[10px] bg-white/10 px-1 sm:px-1.5 py-0.5 rounded text-gray-400 font-normal hidden sm:inline">v3.0.1</span>
                     </h3>
-                    <div className="flex gap-1.5 mt-1.5 opacity-50">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                    <div className="flex gap-1 sm:gap-1.5 mt-1 sm:mt-1.5 opacity-50">
+                        <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-red-500"></span>
+                        <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-yellow-500"></span>
+                        <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-green-500"></span>
                     </div>
                 </div>
               </div>
-              <button 
-                onClick={onClose} 
-                className="p-2 hover:bg-white/10 rounded-sm transition-colors text-gray-400 hover:text-white group"
+              <button
+                onClick={onClose}
+                className="p-1.5 sm:p-2 hover:bg-white/10 rounded-sm transition-colors text-gray-400 hover:text-white group"
               >
-                <X size={20} className="group-hover:rotate-90 transition-transform duration-300" />
+                <X size={18} className="sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
               </button>
             </div>
-            
+
             {/* Body */}
-            <div className="p-6 overflow-y-auto custom-scrollbar flex-1 relative">
+            <div className="p-3 sm:p-4 md:p-6 overflow-y-auto custom-scrollbar flex-1 relative">
               {children}
             </div>
           </motion.div>
@@ -191,26 +191,26 @@ const JobMatcherTool = () => {
               <p className="text-gray-300 text-sm leading-relaxed">"{result.justification}"</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-               <div className="bg-black/40 border border-white/10 p-5 rounded-sm hover:border-primary/30 transition-colors">
-                 <h5 className="text-xs text-green-400 font-bold uppercase mb-4 flex items-center gap-2">
-                    <CheckCircle size={14}/> Stack Match
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+               <div className="bg-black/40 border border-white/10 p-3 sm:p-5 rounded-sm hover:border-primary/30 transition-colors">
+                 <h5 className="text-[10px] sm:text-xs text-green-400 font-bold uppercase mb-3 sm:mb-4 flex items-center gap-2">
+                    <CheckCircle size={12} className="sm:w-3.5 sm:h-3.5"/> Stack Match
                  </h5>
-                 <div className="flex flex-wrap gap-2">
+                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                    {result.atsKeywords.map(k => (
-                     <span key={k} className="text-[11px] bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-1 rounded-sm uppercase tracking-wide">
+                     <span key={k} className="text-[9px] sm:text-[11px] bg-green-500/10 text-green-400 border border-green-500/20 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-sm uppercase tracking-wide">
                         {k}
                      </span>
                    ))}
                  </div>
                </div>
-               <div className="bg-black/40 border border-white/10 p-5 rounded-sm hover:border-yellow-500/30 transition-colors">
-                 <h5 className="text-xs text-yellow-500 font-bold uppercase mb-4 flex items-center gap-2">
-                    <AlertCircle size={14}/> Critical Gaps
+               <div className="bg-black/40 border border-white/10 p-3 sm:p-5 rounded-sm hover:border-yellow-500/30 transition-colors">
+                 <h5 className="text-[10px] sm:text-xs text-yellow-500 font-bold uppercase mb-3 sm:mb-4 flex items-center gap-2">
+                    <AlertCircle size={12} className="sm:w-3.5 sm:h-3.5"/> Critical Gaps
                  </h5>
-                 <div className="flex flex-wrap gap-2">
+                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                    {result.missingSkills.length > 0 ? result.missingSkills.map(k => (
-                     <span key={k} className="text-[11px] bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-2 py-1 rounded-sm uppercase tracking-wide">
+                     <span key={k} className="text-[9px] sm:text-[11px] bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-sm uppercase tracking-wide">
                         {k}
                      </span>
                    )) : <span className="text-gray-500 text-xs">No critical gaps detected.</span>}
@@ -336,13 +336,13 @@ const ExplainerTool = () => {
   };
 
   return (
-    <div className="space-y-8 font-mono">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="space-y-6 sm:space-y-8 font-mono">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6">
         <div>
           <label className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 block font-bold">Target Project</label>
           <div className="relative">
-            <select 
-              className="retro-input w-full p-3 bg-black/50 border border-white/20 text-white appearance-none cursor-pointer hover:border-white/40"
+            <select
+              className="retro-input w-full p-2.5 sm:p-3 bg-black/50 border border-white/20 text-white text-sm sm:text-base appearance-none cursor-pointer hover:border-white/40"
               value={selectedProject}
               onChange={(e) => setSelectedProject(e.target.value)}
             >
@@ -355,18 +355,18 @@ const ExplainerTool = () => {
         </div>
         <div>
           <label className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 block font-bold">Explanation Depth</label>
-          <div className="flex gap-2">
+          <div className="flex gap-1.5 sm:gap-2">
             {[
               { id: 'simple', label: 'Overview' },
-              { id: 'tech', label: 'Architecture & Stack' },
-              { id: 'interview', label: 'Interview Deep Dive' }
+              { id: 'tech', label: 'Architecture' },
+              { id: 'interview', label: 'Deep Dive' }
             ].map((m) => (
               <button
                 key={m.id}
                 onClick={() => setMode(m.id as any)}
-                className={`flex-1 py-3 text-[9px] md:text-[10px] uppercase font-bold border transition-all ${
+                className={`flex-1 py-2.5 sm:py-3 text-[8px] sm:text-[9px] md:text-[10px] uppercase font-bold border transition-all ${
                   mode === m.id
-                  ? 'bg-primary text-black border-primary shadow-[0_0_10px_rgba(34,197,94,0.3)]' 
+                  ? 'bg-primary text-black border-primary shadow-[0_0_10px_rgba(34,197,94,0.3)]'
                   : 'bg-transparent text-gray-500 border-white/10 hover:border-white/30 hover:text-gray-300'
                 }`}
               >
@@ -442,13 +442,13 @@ const InterviewPrepTool = () => {
   };
 
   return (
-    <div className="space-y-6 font-mono">
-      <div className="flex gap-4 items-end">
+    <div className="space-y-4 sm:space-y-6 font-mono">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-end">
         <div className="flex-1">
             <label className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 block font-bold">Target Role</label>
             <div className="relative">
-                <select 
-                className="retro-input w-full p-3 bg-black/50 border border-white/20 text-white appearance-none cursor-pointer"
+                <select
+                className="retro-input w-full p-2.5 sm:p-3 bg-black/50 border border-white/20 text-white text-sm sm:text-base appearance-none cursor-pointer"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 >
@@ -461,27 +461,27 @@ const InterviewPrepTool = () => {
                 <ChevronRight className="rotate-90 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500" size={14} />
             </div>
         </div>
-        <button 
+        <button
           onClick={handleGenerate}
           disabled={loading}
-          className="retro-button px-8 py-3 h-[46px] font-bold uppercase tracking-widest text-xs flex items-center gap-2"
+          className="retro-button w-full sm:w-auto px-4 sm:px-8 py-2.5 sm:py-3 sm:h-[46px] font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-2"
         >
-          {loading ? <Loader2 className="animate-spin" size={14} /> : 'Generate Questions'}
+          {loading ? <Loader2 className="animate-spin" size={14} /> : <><span className="hidden sm:inline">Generate Questions</span><span className="sm:hidden">Generate</span></>}
         </button>
       </div>
 
-      <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
+      <div className="space-y-3 sm:space-y-4 max-h-[50vh] overflow-y-auto pr-1 sm:pr-2 custom-scrollbar">
         {loading && <LoadingScan />}
         {questions.map((q, i) => (
-          <motion.div 
-            key={i} 
+          <motion.div
+            key={i}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="border border-white/10 bg-white/[0.02] p-5 rounded-sm hover:bg-white/[0.04] transition-colors"
+            className="border border-white/10 bg-white/[0.02] p-3 sm:p-5 rounded-sm hover:bg-white/[0.04] transition-colors"
           >
-            <div className="flex justify-between items-start mb-3">
-              <span className={`text-[10px] px-2 py-1 rounded-sm uppercase tracking-wide border ${
+            <div className="flex justify-between items-start mb-2 sm:mb-3">
+              <span className={`text-[8px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-sm uppercase tracking-wide border ${
                   q.type.includes('System Design') ? 'border-purple-500/30 text-purple-400 bg-purple-500/10' :
                   q.type.includes('Technical') ? 'border-blue-500/30 text-blue-400 bg-blue-500/10' :
                   'border-orange-500/30 text-orange-400 bg-orange-500/10'
@@ -489,9 +489,9 @@ const InterviewPrepTool = () => {
                   {q.type}
               </span>
             </div>
-            <p className="text-white font-bold mb-4 text-sm md:text-base">Q: {q.question}</p>
-            <div className="pl-4 border-l-2 border-white/10 ml-1">
-              <p className="text-gray-400 text-sm leading-relaxed italic">" {q.answer} "</p>
+            <p className="text-white font-bold mb-3 sm:mb-4 text-xs sm:text-sm md:text-base">Q: {q.question}</p>
+            <div className="pl-3 sm:pl-4 border-l-2 border-white/10 ml-1">
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed italic">" {q.answer} "</p>
             </div>
           </motion.div>
         ))}
@@ -541,36 +541,36 @@ export const AiDashboard = () => {
   ];
 
   return (
-    <section className="py-24 px-6 max-w-7xl mx-auto font-mono relative">
-       {/* Ambient Background Glow */}
-       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none z-0" />
+    <section className="py-16 md:py-24 px-4 sm:px-6 max-w-7xl mx-auto font-mono relative">
+       {/* Ambient Background Glow - hidden on mobile for performance */}
+       <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
-       <motion.div 
+       <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="relative z-10 mb-16 border-b border-white/10 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6"
+          className="relative z-10 mb-10 md:mb-16 border-b border-white/10 pb-4 md:pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6"
         >
           <div>
-            <div className="flex items-center gap-3 mb-2">
-                <span className="inline-block w-2 h-2 bg-primary animate-pulse rounded-full"></span>
-                <span className="text-xs font-bold text-primary tracking-widest uppercase">AI Agent Active</span>
+            <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary animate-pulse rounded-full"></span>
+                <span className="text-[10px] sm:text-xs font-bold text-primary tracking-widest uppercase">AI Agent Active</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white flex items-center gap-4">
+            <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white flex items-center gap-2 sm:gap-4">
               RECRUITER_DASHBOARD
             </h2>
-            <p className="text-gray-400 mt-4 text-base max-w-xl leading-relaxed">
+            <p className="text-gray-400 mt-3 md:mt-4 text-sm md:text-base max-w-xl leading-relaxed">
               Interact with my digital twin. Use these LLM-powered tools to evaluate my fit for specific AI/ML Engineering roles.
             </p>
           </div>
-          <div className="text-[10px] text-gray-600 font-mono text-right bg-white/5 p-3 border border-white/5 rounded-sm backdrop-blur-sm">
+          <div className="text-[9px] sm:text-[10px] text-gray-600 font-mono text-left md:text-right bg-white/5 p-2 sm:p-3 border border-white/5 rounded-sm backdrop-blur-sm">
              <div>SYSTEM_STATUS: <span className="text-green-500">ONLINE</span></div>
              <div>CONTEXT_WINDOW: <span className="text-white">1M TOKENS</span></div>
              <div>MODEL: <span className="text-white">GEMINI-2.5-FLASH</span></div>
           </div>
        </motion.div>
 
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 relative z-10">
          {tools.map((tool, idx) => (
            <motion.div
              key={tool.id}
@@ -579,24 +579,25 @@ export const AiDashboard = () => {
              transition={{ delay: idx * 0.1, type: "spring", stiffness: 50 }}
              viewport={{ once: true }}
              onClick={() => setActiveTool(tool.id as ToolType)}
-             className={`group relative h-full bg-[#080808]/80 backdrop-blur-sm border border-white/10 p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] ${tool.border}`}
+             className={`group relative h-full bg-[#080808]/80 backdrop-blur-sm border border-white/10 p-3 sm:p-4 md:p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] ${tool.border}`}
            >
              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-             
-             <div className={`mb-6 ${tool.color} bg-white/[0.03] inline-flex items-center justify-center w-12 h-12 rounded-sm border border-white/5 group-hover:bg-white/[0.08] transition-colors`}>
-               <tool.icon size={24} />
+
+             <div className={`mb-3 sm:mb-4 md:mb-6 ${tool.color} bg-white/[0.03] inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-sm border border-white/5 group-hover:bg-white/[0.08] transition-colors`}>
+               <tool.icon size={18} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
              </div>
-             
-             <h3 className="text-lg font-bold text-white mb-3 group-hover:text-primary transition-colors flex items-center gap-2">
+
+             <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-1.5 sm:mb-2 md:mb-3 group-hover:text-primary transition-colors flex items-center gap-2">
                {tool.title}
              </h3>
-             <p className="text-xs text-gray-500 mb-8 leading-relaxed font-sans">
+             <p className="text-[10px] sm:text-xs text-gray-500 mb-6 sm:mb-8 leading-relaxed font-sans line-clamp-2">
                {tool.desc}
              </p>
 
-             <div className="absolute bottom-6 right-6 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 group-hover:text-primary transition-colors">
-                <span>Open Tool</span>
-                <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+             <div className="absolute bottom-3 sm:bottom-4 md:bottom-6 right-3 sm:right-4 md:right-6 flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-600 group-hover:text-primary transition-colors">
+                <span className="hidden sm:inline">Open Tool</span>
+                <span className="sm:hidden">Open</span>
+                <ChevronRight size={12} className="sm:w-3.5 sm:h-3.5 group-hover:translate-x-1 transition-transform" />
              </div>
            </motion.div>
          ))}
