@@ -231,14 +231,14 @@ const ProjectCard: React.FC<{ project: any; index: number }> = ({ project, index
       className="h-full"
     >
       <motion.div
-        className="retro-card h-full p-4 sm:p-6 flex flex-col"
-        whileHover={{
-          scale: 1.02,
-          borderColor: "#22c55e",
-          boxShadow: "0px 0px 20px rgba(34, 197, 94, 0.4)"
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
+  className="retro-card h-full min-h-[60vh] p-6 sm:p-8 flex flex-col justify-between"
+  whileHover={{
+    scale: 1.02,
+    borderColor: "#22c55e",
+    boxShadow: "0px 0px 20px rgba(34, 197, 94, 0.4)"
+  }}
+  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+>
         <div className="flex justify-between items-start mb-4 sm:mb-6 border-b border-white/10 pb-3 sm:pb-4">
           <div className="text-primary">
             <project.icon size={24} className="sm:w-7 sm:h-7" strokeWidth={1.5} />
@@ -261,7 +261,7 @@ const ProjectCard: React.FC<{ project: any; index: number }> = ({ project, index
         <p className="text-[10px] sm:text-xs text-primary mb-3 sm:mb-4 font-mono uppercase tracking-wide">
           // {project.subtitle}
         </p>
-        <p className="text-gray-400 mb-4 sm:mb-6 text-xs sm:text-sm leading-relaxed line-clamp-3 font-sans">
+        <p className="text-gray-400 mb-4 sm:mb-6 text-xs sm:text-sm leading-relaxed font-sans">
           {project.description}
         </p>
 
@@ -515,14 +515,14 @@ const Projects = () => {
             className="flex h-full"
           >
             {PROJECTS.map((project, index) => (
-              <div
-                key={project.id}
-                className="w-screen flex items-center justify-center px-4 sm:px-6"
-              >
-                <div className="max-w-md sm:max-w-lg md:max-w-xl w-full">
-                  <ProjectCard project={project} index={index} />
-                </div>
-              </div>
+             <div
+  key={project.id}
+  className="min-w-full h-full flex items-center justify-center px-4 sm:px-10"
+>
+  <div className="w-full max-w-3xl">
+    <ProjectCard project={project} index={index} />
+  </div>
+</div>
             ))}
           </motion.div>
         </div>
