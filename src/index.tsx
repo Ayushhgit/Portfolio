@@ -488,7 +488,7 @@ const App = () => {
             className="mb-10 md:mb-16 flex flex-col sm:flex-row sm:items-end gap-2 sm:gap-4 border-b border-white/10 pb-4"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">./PROJECTS</h2>
-            <span className="text-gray-500 text-xs sm:text-sm sm:mb-2">3 items found</span>
+            <span className="text-gray-500 text-xs sm:text-sm sm:mb-2">4 items found</span>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {PROJECTS.map((project, index) => (
