@@ -240,7 +240,7 @@ const ProjectCard: React.FC<{ project: any; index: number; progress: any }> = ({
   const opacity = useTransform(
     progress,
     [cardStart, cardCenter, cardEnd],
-    [0.4, 1, 0.4]
+    [0.7, 1, 0.7]
   );
   
   // Slight rotation for depth effect
@@ -511,6 +511,29 @@ const Projects = () => {
     damping: 30,
     restDelta: 0.001,
   });
+
+  // Lock body scroll when projects section is in view
+useEffect(() => {
+  const handleScroll = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    const isInView = rect.top <= 0 && rect.bottom > window.innerHeight;
+    
+    if (isInView) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => {
+    window.removeEventListener('scroll', handleScroll);
+    document.body.style.overflow = 'auto';
+  };
+}, []);
 
   // Calculate horizontal translation based on smooth progress
   // Each card takes ~85% of viewport width, so we move (total-1) * 85%
