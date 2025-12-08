@@ -131,11 +131,17 @@ const Hero = () => {
               <span className="hidden sm:inline">Execute_Projects.exe</span>
               <span className="sm:hidden">Projects</span>
             </a>
-            <a href="/resume.pdf" target="_blank" className="px-6 sm:px-8 py-3 border border-white/20 text-gray-400 hover:bg-white/5 hover:text-white transition-all text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2">
-              <Download size={16} className="sm:w-[18px] sm:h-[18px]" />
-              <span className="hidden sm:inline">Read_CV.pdf</span>
-              <span className="sm:hidden">Resume</span>
-            </a>
+           <a
+  href="https://drive.google.com/file/d/1zX4qZo34_NLcDqR-c5OxsFkTmO8gqr54/view?usp=sharing"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-6 sm:px-8 py-3 border border-white/20 text-gray-400 hover:bg-white/5 hover:text-white transition-all text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+>
+  <Download size={16} className="sm:w-[18px] sm:h-[18px]" />
+  <span className="hidden sm:inline">Read_CV.pdf</span>
+  <span className="sm:hidden">Resume</span>
+</a>
+
           </div>
         </motion.div>
       </div>
