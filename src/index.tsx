@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from 'react-dom/client';
 import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion';
 import { Github, Linkedin, Mail, ExternalLink, Download, ChevronDown, Send, Menu, X, Terminal, Code, Cpu, Database, Globe, Shield } from 'lucide-react';
@@ -470,6 +470,67 @@ const Contact = () => {
   );
 };
 
+const Projects = () => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"], // section start to section end
+  });
+
+  const total = PROJECTS.length;
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0vw", `-${(total - 1) * 100}vw`] // slide left across all slides
+  );
+
+  return (
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative font-mono"
+      style={{ height: `${total * 100}vh` }} // controls how long you scroll
+    >
+      {/* Sticky viewport */}
+      <div className="sticky top-16 md:top-20 h-[calc(100vh-4rem)] flex flex-col">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mb-6 md:mb-10 flex items-end gap-2 sm:gap-4 border-b border-white/10 pb-4 px-4 sm:px-6 max-w-7xl mx-auto w-full"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+            ./PROJECTS
+          </h2>
+          <span className="text-gray-500 text-xs sm:text-sm sm:mb-1">
+            {total} items found
+          </span>
+        </motion.div>
+
+        {/* Horizontal slider */}
+        <div className="flex-1 overflow-hidden">
+          <motion.div
+            style={{ x }}
+            className="flex h-full"
+          >
+            {PROJECTS.map((project, index) => (
+              <div
+                key={project.id}
+                className="w-screen flex items-center justify-center px-4 sm:px-6"
+              >
+                <div className="max-w-md sm:max-w-lg md:max-w-xl w-full">
+                  <ProjectCard project={project} index={index} />
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // --- Main App ---
 
 const App = () => {
@@ -480,7 +541,7 @@ const App = () => {
       <main>
         <Hero />
         <About />
-        <section id="projects" className="py-16 md:py-24 px-4 sm:px-6 max-w-7xl mx-auto font-mono">
+        {/* <section id="projects" className="py-16 md:py-24 px-4 sm:px-6 max-w-7xl mx-auto font-mono">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -495,7 +556,8 @@ const App = () => {
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
-        </section>
+        </section> */}
+        <Projects />
         <Skills />
         <Experience />
         <AiDashboard />
