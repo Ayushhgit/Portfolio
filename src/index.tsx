@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from 'react-dom/client';
-import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { Github, Linkedin, Mail, ExternalLink, Download, ChevronDown, Send, Menu, X, Terminal, Code, Cpu, Database, Globe, Shield } from 'lucide-react';
 
 import Scene from './ThreeBackground';
@@ -221,24 +221,49 @@ const About = () => {
   );
 };
 
-const ProjectCard: React.FC<{ project: any; index: number }> = ({ project, index }) => {
+const ProjectCard: React.FC<{ project: any; index: number; progress: any }> = ({ project, index, progress }) => {
+  const total = PROJECTS.length;
+  
+  // Calculate animation ranges for this specific card
+  const cardStart = index / total;
+  const cardCenter = (index + 0.5) / total;
+  const cardEnd = (index + 1) / total;
+  
+  // Scale animation - card grows when in center, shrinks when leaving
+  const scale = useTransform(
+    progress,
+    [cardStart, cardCenter, cardEnd],
+    [0.85, 1, 0.85]
+  );
+  
+  // Opacity animation
+  const opacity = useTransform(
+    progress,
+    [cardStart, cardCenter, cardEnd],
+    [0.4, 1, 0.4]
+  );
+  
+  // Slight rotation for depth effect
+  const rotateY = useTransform(
+    progress,
+    [cardStart, cardCenter, cardEnd],
+    [5, 0, -5]
+  );
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      style={{ scale, opacity, rotateY }}
       className="h-full"
     >
       <motion.div
-  className="retro-card h-full min-h-[60vh] p-6 sm:p-8 flex flex-col justify-between"
-  whileHover={{
-    scale: 1.02,
-    borderColor: "#22c55e",
-    boxShadow: "0px 0px 20px rgba(34, 197, 94, 0.4)"
-  }}
-  transition={{ type: "spring", stiffness: 300, damping: 20 }}
->
+        className="retro-card h-full min-h-[60vh] p-6 sm:p-8 flex flex-col justify-between"
+        whileHover={{
+          scale: 1.02,
+          borderColor: "#22c55e",
+          boxShadow: "0px 0px 20px rgba(34, 197, 94, 0.4)"
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      >
         <div className="flex justify-between items-start mb-4 sm:mb-6 border-b border-white/10 pb-3 sm:pb-4">
           <div className="text-primary">
             <project.icon size={24} className="sm:w-7 sm:h-7" strokeWidth={1.5} />
@@ -471,60 +496,143 @@ const Contact = () => {
 };
 
 const Projects = () => {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const total = PROJECTS.length;
+
+  // Track scroll progress through the section
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"], // section start to section end
+    target: containerRef,
+    offset: ["start start", "end end"],
   });
 
-  const total = PROJECTS.length;
+  // Smooth out the scroll progress for buttery animations
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  // Calculate horizontal translation based on smooth progress
+  // Each card takes ~85% of viewport width, so we move (total-1) * 85%
   const x = useTransform(
-    scrollYProgress,
+    smoothProgress,
     [0, 1],
-    ["0vw", `-${(total - 1) * 100}vw`] // slide left across all slides
+    ["0%", `-${(total - 1) * 85}%`]
   );
+
+  // Progress bar width
+  const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+
+  // Current card index for display
+  const [currentIndex, setCurrentIndex] = useState(1);
+  
+  useEffect(() => {
+    const unsubscribe = smoothProgress.on("change", (value) => {
+      const index = Math.min(Math.floor(value * total) + 1, total);
+      setCurrentIndex(index);
+    });
+    return () => unsubscribe();
+  }, [smoothProgress, total]);
 
   return (
     <section
+      ref={containerRef}
       id="projects"
-      ref={sectionRef}
       className="relative font-mono"
-      style={{ height: `${total * 100}vh` }} // controls how long you scroll
+      // Height controls scroll distance - more height = slower, more controlled scroll
+      style={{ height: `${total * 100}vh` }}
     >
-      {/* Sticky viewport */}
-      <div className="sticky top-16 md:top-20 h-[calc(100vh-4rem)] flex flex-col">
+      {/* Sticky container that stays in view while scrolling */}
+      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+        
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-6 md:mb-10 flex items-end gap-2 sm:gap-4 border-b border-white/10 pb-4 px-4 sm:px-6 max-w-7xl mx-auto w-full"
+          className="pt-20 md:pt-24 pb-6 md:pb-8 flex items-end justify-between gap-4 border-b border-white/10 px-4 sm:px-6 max-w-7xl mx-auto w-full"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-            ./PROJECTS
-          </h2>
-          <span className="text-gray-500 text-xs sm:text-sm sm:mb-1">
-            {total} items found
-          </span>
+          <div className="flex items-end gap-2 sm:gap-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+              ./PROJECTS
+            </h2>
+            <span className="text-gray-500 text-xs sm:text-sm mb-0.5 sm:mb-1">
+              {total} items found
+            </span>
+          </div>
+          
+          {/* Scroll hint - desktop only */}
+          <motion.div 
+            className="hidden md:flex items-center gap-2 text-gray-500 text-xs"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <span>Scroll to explore</span>
+            <motion.span
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.div>
         </motion.div>
 
-        {/* Horizontal slider */}
-        <div className="flex-1 overflow-hidden">
+        {/* Cards Container */}
+        <div className="flex-1 flex items-center overflow-hidden">
           <motion.div
             style={{ x }}
-            className="flex h-full"
+            className="flex gap-6 sm:gap-8 pl-4 sm:pl-6"
           >
             {PROJECTS.map((project, index) => (
-             <div
-  key={project.id}
-  className="min-w-full h-full flex items-center justify-center px-4 sm:px-10"
->
-  <div className="w-full max-w-3xl">
-    <ProjectCard project={project} index={index} />
-  </div>
-</div>
+              <div
+                key={project.id}
+                className="w-[85vw] sm:w-[80vw] max-w-3xl flex-shrink-0"
+              >
+                <ProjectCard 
+                  project={project} 
+                  index={index} 
+                  progress={smoothProgress}
+                />
+              </div>
             ))}
+            
+            {/* End spacer to ensure last card is fully visible */}
+            <div className="w-[15vw] sm:w-[20vw] flex-shrink-0" />
           </motion.div>
+        </div>
+
+        {/* Progress Indicator */}
+        <div className="py-6 md:py-8 px-4 sm:px-6 max-w-7xl mx-auto w-full">
+          <div className="flex items-center gap-4">
+            {/* Progress bar */}
+            <div className="flex-1 h-1 bg-white/10 overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-primary to-secondary"
+                style={{ width: progressWidth }}
+              />
+            </div>
+            
+            {/* Dot indicators */}
+            <div className="flex gap-2">
+              {PROJECTS.map((_, idx) => (
+                <motion.div
+                  key={idx}
+                  className="w-2 h-2 rounded-full transition-colors duration-300"
+                  style={{
+                    backgroundColor: currentIndex > idx ? "#22c55e" : "rgba(255,255,255,0.2)"
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+          
+          {/* Current / Total indicator */}
+          <div className="flex justify-between mt-3 text-xs text-gray-500 font-mono">
+            <span className="text-primary font-bold">
+              {String(currentIndex).padStart(2, '0')}
+            </span>
+            <span>/ {String(total).padStart(2, '0')}</span>
+          </div>
         </div>
       </div>
     </section>
@@ -541,22 +649,6 @@ const App = () => {
       <main>
         <Hero />
         <About />
-        {/* <section id="projects" className="py-16 md:py-24 px-4 sm:px-6 max-w-7xl mx-auto font-mono">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mb-10 md:mb-16 flex flex-col sm:flex-row sm:items-end gap-2 sm:gap-4 border-b border-white/10 pb-4"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">./PROJECTS</h2>
-            <span className="text-gray-500 text-xs sm:text-sm sm:mb-2">4 items found</span>
-          </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            {PROJECTS.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
-          </div>
-        </section> */}
         <Projects />
         <Skills />
         <Experience />
