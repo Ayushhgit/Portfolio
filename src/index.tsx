@@ -512,28 +512,27 @@ const Projects = () => {
     restDelta: 0.001,
   });
 
-  // Lock body scroll when projects section is in view
+  // Prevent page scroll until horizontal scroll is complete
 useEffect(() => {
-  const handleScroll = () => {
+  const preventDefault = (e: WheelEvent) => {
     const container = containerRef.current;
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
     const isInView = rect.top <= 0 && rect.bottom > window.innerHeight;
+    const progress = scrollYProgress.get();
     
-    if (isInView) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
+    // Only prevent if we're in the section and haven't finished scrolling
+    if (isInView && progress < 0.95) {
+      e.preventDefault();
     }
   };
 
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('wheel', preventDefault, { passive: false });
   return () => {
-    window.removeEventListener('scroll', handleScroll);
-    document.body.style.overflow = 'auto';
+    window.removeEventListener('wheel', preventDefault);
   };
-}, []);
+}, [scrollYProgress]);
 
   // Calculate horizontal translation based on smooth progress
   // Each card takes ~85% of viewport width, so we move (total-1) * 85%
