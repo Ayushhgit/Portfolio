@@ -9,13 +9,13 @@ export const PROFILE = {
   phone: "+91 7992494188",
   social: {
     github: "https://github.com/Ayushhgit",
-    linkedin: "https://linkedin.com/in/ayushraj",
+    linkedin: "https://www.linkedin.com/in/ayush-raj-29nov/",
   },
-  roles: ["AI/ML Engineer", "LLM & RAG Developer", "MLOps Enthusiast"],
+  roles: ["AI/ML Engineer", "LLM & RAG Developer", "MLOps & Backend Engineer"],
 };
 
 export const ABOUT = {
-  description: "I am a B.Tech Computer Science Engineering student (CGPA 9.58/10) at KIIT University. I specialize in building real-world AI/ML and LLM applications, focusing on MLOps, backend systems, and scalable infrastructure on AWS. My passion lies in designing reliable, production-grade AI systems, from RAG apps and agents to network security models."
+  description:  "B.Tech Computer Science student at KIIT University (CGPA 9.58/10) focused on building real-world AI/ML and LLM systems. I work across the stack—data pipelines, model training, evaluation, and deployment—using modern MLOps practices on AWS. My interests include RAG systems, autonomous agents, and network security models that are not only accurate in notebooks but robust, observable, and scalable in production.",
 };
 
 export const EXPERIENCE = [
