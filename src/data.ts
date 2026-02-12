@@ -94,7 +94,31 @@ export const PROJECTS = [
       github: "https://github.com/Ayushhgit/price-prediction-multimodal"
     },
     icon: TrendingUp
-  }
+  },
+  {
+  id: 5,
+  title: "ExamRAG",
+  subtitle: "AI-Powered Exam Intelligence System",
+  description: "Retrieval-augmented exam analysis system that ingests past papers and textbooks to detect patterns, predict likely questions, generate mock exams, and create priority-based study plans.",
+  tags: ["Python", "LangChain", "FAISS", "Groq", "RAG", "BM25", "NetworkX"],
+  links: {
+    live: null,
+    github: "https://github.com/Ayushhgit/ExamRAG"
+  },
+  icon: Brain
+},
+  {
+  id: 6,
+  title: "Aadhaar Lifecycle Integrity Analysis",
+  subtitle: "Data Integrity & Lifecycle Analytics Framework",
+  description: "End-to-end analytical framework for studying Aadhaar data lifecycle integrity, including enrolment trends, biometric updates, demographic shifts, cohort alignment, and integrity index computation using structured data pipelines and statistical modeling.",
+  tags: ["Python", "Pandas", "NumPy", "Jupyter", "Data Analysis", "Statistical Modeling"],
+  links: {
+    live: null,
+    github: "https://github.com/Ayushhgit/aadhar-lifecyle-integrity"
+  },
+  icon: Database
+}
 ];
 
 export const SKILLS = [
